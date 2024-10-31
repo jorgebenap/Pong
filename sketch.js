@@ -6,9 +6,9 @@ let grosorMarco = 10; // Grosor de los marcos superior e inferior
 // Variables de la pelota
 let xPelota = anchoCanvas / 2;
 let yPelota = altoCanvas / 2;
-let velocidadXPelota = 5;
-let velocidadYPelota = 3;
-let diametroPelota = 20;
+let velocidadXPelota = 2;
+let velocidadYPelota = 2;
+let diametroPelota = 30;
 
 // Variables de las raquetas
 let anchoRaqueta = 10;
@@ -65,9 +65,9 @@ function moverPelota() {
     xPelota += velocidadXPelota;
     yPelota += velocidadYPelota;
 
-    if (velocidadXPelota < 15) { // Limitar la velocidad máxima
-        velocidadXPelota *= 1.01;
-        velocidadYPelota *= 1.01;
+    if (velocidadXPelota < 100) { // Limitar la velocidad máxima
+        velocidadXPelota *= 1.001;
+        velocidadYPelota *= 1.001;
     }
 }
 
@@ -153,9 +153,15 @@ function verificarPuntaje() {
 
 // Reiniciar la pelota al centro
 function resetPelota() {
-    xPelota = anchoCanvas / 2;
-    yPelota = altoCanvas / 2;
-    velocidadXPelota *= -1; // Cambiar dirección
+  xPelota = anchoCanvas / 2;
+  yPelota = altoCanvas / 2;
+  velocidadXPelota *= -1; // Cambiar dirección
+  // Aumentar ligeramente la velocidad después de cada gol
+  if (velocidadXPelota < 1) {
+    // Limitar la velocidad máxima
+    velocidadXPelota *= 1.001;
+    velocidadYPelota *= 1.001;
+  }
 }
 
 // Configurar la dificultad según el modo de juego
