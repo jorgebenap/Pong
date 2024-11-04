@@ -3,6 +3,8 @@ let anchoCanvas = 800;
 let altoCanvas = 400;
 let grosorMarco = 10; // Grosor de los marcos superior e inferior
 let fondo, barraJugador, barraComputadora, bola; // Variables para almacenar las imágenes
+let sonidoColision; // Variable para el sonido de colisión
+let sonidoGol; // Variable para el sonido de anotación
 
 // Variables de la pelota
 let xPelota = anchoCanvas / 2;
@@ -31,6 +33,8 @@ function preload() {
   barraJugador = loadImage("/Sprites/barra1.png");
   barraComputadora = loadImage("/Sprites/barra2.png");
   bola = loadImage("/Sprites/bola.png");
+  sonidoColision = loadSound("/Sounds/pong.wav");
+  sonidoGol = loadSound("/Sounds/gol.wav");
 }
 
 // Configuración inicial
@@ -132,6 +136,9 @@ function verificarColisionRaquetaJugador() {
     // Modificar la velocidad Y de la pelota según dónde golpee la raqueta
     let diff = yPelota - (yRaquetaJugador + altoRaqueta / 2);
     velocidadYPelota = diff * 0.1;
+
+    //Reproducir el sonido de la colisión
+    sonidoColision.play();
   }
 }
 
@@ -168,6 +175,9 @@ function verificarColisionRaquetaComputadora() {
     yPelota < yRaquetaComputadora + altoRaqueta
   ) {
     velocidadXPelota *= -1;
+
+    //Reproducir el sonido de la colisión
+    sonidoColision.play();
   }
 }
 
@@ -184,9 +194,11 @@ function mostrarPuntaje() {
 function verificarPuntaje() {
   if (xPelota < 0) {
     puntajeComputadora++;
+    sonidoGol.play(); //Reproduce el sonido de gol
     resetPelota();
   } else if (xPelota > anchoCanvas) {
     puntajeJugador++;
+    sonidoGol.play(); //Reproduce el sonido de gol
     resetPelota();
 
     // Incrementar dificultad en cada 5 puntos
